@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListener;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Teacher;
+import model.exceptions.ValidationException;
 import model.services.TeacherService;
 
 public class TeacherFormController implements Initializable {
@@ -90,6 +93,10 @@ public class TeacherFormController implements Initializable {
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		}
+		catch (ValidationException e) {
+			setErrorMessage(e.getErrors());
+		}
+		
 		catch (DbException e) {
 			Alerts.showAlert("Error savin object", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -98,21 +105,58 @@ public class TeacherFormController implements Initializable {
 	private void notifyDataChangeListeners() {
 		for(DataChangeListener listener : dataChangeListerners) {
 			listener.onDataChanged();
-		}
-		
+		}		
 	}
 
 	private Teacher getFormData() {
 		
 		Teacher obj = new Teacher();
 		
+		ValidationException exception = new ValidationException("Validation errror");
+				
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		
+		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+			exception.addError("name", "Field can't be empty!");
+		}
 		obj.setName(txtName.getText());
+				
+		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
+			exception.addError("cpf", "Field can't be empty!");
+		}
 		obj.setCpf(txtCpf.getText());
+		
+		if (txtPhone.getText() == null || txtPhone.getText().trim().equals("")) {
+			exception.addError("phone", "Field can't be empty!");
+		}
 		obj.setPhone(txtPhone.getText());
+		
+		if (txtSalary.getText() == null || txtSalary.getText().trim().equals("")) {
+			exception.addError("salary", "Field can't be empty!");
+		}
 		obj.setSalary(Utils.tryParseToDouble(txtSalary.getText()));
 		
+		if(exception.getErrors().size() > 0) 
+			throw exception;
+		
 		return obj;
+	}
+	
+	private void setErrorMessage(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if (fields.contains("name")) 
+			labelErrorName.setText(errors.get("name"));
+			
+		if (fields.contains("cpf")) 
+			labelErrorCpf.setText(errors.get("cpf"));
+			
+		if (fields.contains("phone")) 
+			labelErrorPhone.setText(errors.get("phone"));
+		
+		if (fields.contains("salary")) 
+			labelErrorSalary.setText(errors.get("salary"));
+		
 	}
 
 	@Override
