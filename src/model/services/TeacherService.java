@@ -13,4 +13,10 @@ public class TeacherService {
 	public List<Teacher> findAll() {
 		return dao.findAll();
 	}
+	
+	public void saveOrUpdate(Teacher obj) {
+		if (obj.getId() == null)
+			dao.insert(obj);
+		dao.update(obj);
+	}
 }

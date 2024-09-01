@@ -82,12 +82,15 @@ public class TeacherDaoJDBC implements TeacherDao {
 		try {
 			st = conn.prepareStatement(
 				"INSERT INTO teacher " +
-				"(Name) " +
+				"(Name, Cpf, Phone, Salary) " +
 				"VALUES " +
-				"(?)", 
+				"(?, ?, ?, ?)", 
 				Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getName());
+			st.setString(2, obj.getCpf());
+			st.setString(3, obj.getPhone());
+			st.setDouble(4, obj.getSalary());
 
 			int rowsAffected = st.executeUpdate();
 			
