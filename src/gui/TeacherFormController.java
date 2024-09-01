@@ -171,12 +171,12 @@ public class TeacherFormController implements Initializable {
 		Constraints.setTextFieldMaxLength(txtPhone, 15);
 		Constraints.setTextFieldDouble(txtSalary);
 	}
-	
-	public void updateFormeData() {
-		if(entity == null) {
-			throw new IllegalStateException("Entity was null!");
+	public void updateFormData() {
+		if (entity == null) {
+			throw new IllegalStateException("Entity was null");
 		}
 		txtId.setText(String.valueOf(entity.getId()));
-		txtName.setText(entity.getName());		
-	}
+		txtName.setText(entity.getName());
+	}	
+	
 }
