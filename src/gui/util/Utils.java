@@ -48,7 +48,8 @@ public class Utils {
 					super.updateItem(item, empty);
 					if (empty) {
 						setText(null);
-					} else {
+					} else 
+					{
 						setText(sdf.format(item));
 					}
 				}

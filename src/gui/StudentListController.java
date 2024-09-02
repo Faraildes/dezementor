@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -47,7 +48,10 @@ public class StudentListController implements Initializable, DataChangeListener 
 	private TableColumn<Student, String> tableColumnPhone;
 
 	@FXML
-	private TableColumn<Student, Double> tableColumnSalary;
+	private TableColumn<Student, Date> tableColumnBirthDate;
+	
+	@FXML
+	private TableColumn<Student, Integer> tableColumnPeriod;
 
 	@FXML
 	private TableColumn<Student, Student> tableColumnEDIT;
@@ -91,8 +95,13 @@ public class StudentListController implements Initializable, DataChangeListener 
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		tableColumnPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-		tableColumnPhone.setCellValueFactory(new PropertyValueFactory<>("period"));
+		tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+		//Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
+		tableColumnPeriod.setCellValueFactory(new PropertyValueFactory<>("period"));
 		
+		
+		
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewStudent.prefHeightProperty().bind(stage.heightProperty());
 	}
@@ -163,7 +172,7 @@ public class StudentListController implements Initializable, DataChangeListener 
 	}
 
 	private void removeEntity(Student obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("Comfirmation", "Are you sure to delete?");
+		Optional<ButtonType> result = Alerts.showConfirmation("Comfirmation", "re you sure to delete?");
 		
 		if (result.get() == ButtonType.OK) {
 			if(service == null)

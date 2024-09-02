@@ -27,15 +27,15 @@ public class StudentDaoJDBC implements StudentDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO student "
-					+ "(Name, BirthDate, Cpf, Phone, Period) "
+					+ "(Name, Cpf, Phone, BirthDate, Period) "
 					+ "VALUES "
 					+ "(?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			st.setString(1, obj.getName());			
-			st.setDate(2, new java.sql.Date(obj.getBirthDate().getTime()));
-			st.setString(3, obj.getCpf());
-			st.setString(4, obj.getPhone());
+			st.setString(1, obj.getName());				
+			st.setString(2, obj.getCpf());
+			st.setString(3, obj.getPhone());
+			st.setDate(4, new java.sql.Date(obj.getBirthDate().getTime()));
 			st.setInt(5, obj.getPeriod());			
 			
 			int rowsAffected = st.executeUpdate();
@@ -66,13 +66,13 @@ public class StudentDaoJDBC implements StudentDao {
 		try {
 			st = conn.prepareStatement(
 					"UPDATE student "
-					+ "SET Name = ?, BirthDate = ?, Cpf = ?, Phone = ?, Period = ? "
+					+ "SET Name = ?, Cpf = ?, Phone = ?, BirthDate = ?, Period = ? "
 					+ "WHERE Id = ? ");
 			
-			st.setString(1, obj.getName());
-			st.setDate(2, new java.sql.Date(obj.getBirthDate().getTime()));
-			st.setString(3, obj.getCpf());
-			st.setString(4, obj.getPhone());
+			st.setString(1, obj.getName());			
+			st.setString(2, obj.getCpf());
+			st.setString(3, obj.getPhone());
+			st.setDate(4, new java.sql.Date(obj.getBirthDate().getTime()));
 			st.setInt(5, obj.getPeriod());
 			
 			st.executeUpdate();
@@ -132,10 +132,10 @@ public class StudentDaoJDBC implements StudentDao {
 	private Student instantiateStudent(ResultSet rs) throws SQLException {
 		Student obj = new Student();
 		obj.setId(rs.getInt("Id"));
-		obj.setName(rs.getString("Name"));		
-		obj.setBirthDate(rs.getDate("BirthDate"));
+		obj.setName(rs.getString("Name"));			
 		obj.setCpf(rs.getString("Cpf"));
 		obj.setPhone(rs.getString("Phone"));
+		obj.setBirthDate(rs.getDate("BirthDate"));
 		obj.setPeriod(rs.getInt("Period"));
 		return obj;
 	}
@@ -156,8 +156,7 @@ public class StudentDaoJDBC implements StudentDao {
 				obj.setId(rs.getInt("Id"));
 				obj.setName(rs.getString("Name"));
 				obj.setCpf(rs.getString("Cpf"));				
-				obj.setPhone(rs.getString("Phone"));
-				
+				obj.setPhone(rs.getString("Phone"));				
 				obj.setBirthDate(rs.getDate("BirthDate"));
 				obj.setPeriod(rs.getInt("Period"));
 				list.add(obj);

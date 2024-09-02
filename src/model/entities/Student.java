@@ -18,17 +18,15 @@ public class Student implements Serializable {
 	public Student() {	
 	}
 		
-	public Student(Integer id, String name, Date birthDate, String cpf, String phone, Integer period) {
+	public Student(Integer id, String name,  String cpf, String phone, Date birthDate, Integer period) {
 		this.id = id;
-		this.name = name;
-		this.birthDate = birthDate;
+		this.name = name;		
 		this.cpf = cpf;
 		this.phone = phone;
+		this.birthDate = birthDate;
 		this.period = period;
 	}
-	
-
-	public Integer getId() {
+		public Integer getId() {
 		return id;
 	}
 
