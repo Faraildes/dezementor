@@ -13,12 +13,12 @@ public class Student implements Serializable {
 	private Date birthDate;
 	private String cpf;
 	private String phone;
-	private String period;
+	private Integer period;
 		
 	public Student() {	
 	}
 		
-	public Student(Integer id, String name, Date birthDate, String cpf, String phone, String period) {
+	public Student(Integer id, String name, Date birthDate, String cpf, String phone, Integer period) {
 		this.id = id;
 		this.name = name;
 		this.birthDate = birthDate;
@@ -68,11 +68,11 @@ public class Student implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(String period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 

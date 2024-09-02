@@ -1,0 +1,31 @@
+CREATE TABLE teacher (
+  Id int(11) NOT NULL AUTO_INCREMENT,
+  Name varchar(60) NOT NULL,    
+  Cpf varchar(11) NOT NULL,
+  Phone varchar(10) NOT NULL,  
+  Salary double NOT NULL,  
+  PRIMARY KEY (Id)
+  );
+
+CREATE TABLE student (
+  Id int(11) NOT NULL AUTO_INCREMENT,
+  Name varchar(60) NOT NULL,    
+  Cpf varchar(11) NOT NULL,
+  Phone varchar(10) NOT NULL,
+  BirthDate datetime NOT NULL, 
+  Period int(2) NOT NULL,  
+  PRIMARY KEY (Id)   
+  );
+
+INSERT INTO teacher(Name, Cpf, Phone, Salary) VALUES
+	('Francisco', '25468974521', '985674528', 12000.00),
+	('Oberlan', '25467821321', '97856421', 10000.00),
+	('Maria', '32565487231', '978564212', 15000.00);
+
+INSERT INTO student (Name,  Cpf, Phone, BirthDate, Period) VALUES 
+  ('Bob Brown', '15687945329', '986534726', '1998-04-21 00:00:00', 2),
+  ('Maria Green', '23654893312', '965878421', '1979-12-31 00:00:00', 3),                
+  ('Alex Grey', '32564879231', '987654231', '1988-01-15 00:00:00', 3),
+  ('Martha Red', '14578965421', '987564212', '1993-11-30 00:00:00', 2),
+  ('Donald Blue', '5648975412', '96543257', '2000-01-09 00:00:00', 10),
+  ('Alex Pink', '23456789254', '98654231', '1997-03-04 00:00:00', 7);

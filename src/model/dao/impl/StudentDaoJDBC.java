@@ -12,6 +12,7 @@ import db.DB;
 import db.DbException;
 import model.dao.StudentDao;
 import model.entities.Student;
+import model.entities.Teacher;
 
 public class StudentDaoJDBC implements StudentDao {
 	
@@ -26,7 +27,7 @@ public class StudentDaoJDBC implements StudentDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO student "
-					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
+					+ "(Name, BirthDate, Cpf, Phone, Period) "
 					+ "VALUES "
 					+ "(?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
@@ -35,7 +36,7 @@ public class StudentDaoJDBC implements StudentDao {
 			st.setDate(2, new java.sql.Date(obj.getBirthDate().getTime()));
 			st.setString(3, obj.getCpf());
 			st.setString(4, obj.getPhone());
-			st.setString(5, obj.getPeriod());			
+			st.setInt(5, obj.getPeriod());			
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -72,7 +73,7 @@ public class StudentDaoJDBC implements StudentDao {
 			st.setDate(2, new java.sql.Date(obj.getBirthDate().getTime()));
 			st.setString(3, obj.getCpf());
 			st.setString(4, obj.getPhone());
-			st.setString(5, obj.getPeriod());
+			st.setInt(5, obj.getPeriod());
 			
 			st.executeUpdate();
 		}
@@ -135,7 +136,7 @@ public class StudentDaoJDBC implements StudentDao {
 		obj.setBirthDate(rs.getDate("BirthDate"));
 		obj.setCpf(rs.getString("Cpf"));
 		obj.setPhone(rs.getString("Phone"));
-		obj.setPeriod(rs.getString("Period"));
+		obj.setPeriod(rs.getInt("Period"));
 		return obj;
 	}
 		
@@ -145,16 +146,23 @@ public class StudentDaoJDBC implements StudentDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT student.*, "									
-					+ "ORDER BY Name");						
-			
+				"SELECT * FROM Student ORDER BY Name");
 			rs = st.executeQuery();
+
+			List<Student> list = new ArrayList<>();
+
+			while (rs.next()) {
+				Student obj = new Student();
+				obj.setId(rs.getInt("Id"));
+				obj.setName(rs.getString("Name"));
+				obj.setCpf(rs.getString("Cpf"));				
+				obj.setPhone(rs.getString("Phone"));
+				
+				obj.setBirthDate(rs.getDate("BirthDate"));
+				obj.setPeriod(rs.getInt("Period"));
+				list.add(obj);
+			}
 			
-			List<Student> list = new ArrayList<>();			
-						
-			Student obj = instantiateStudent(rs);
-			list.add(obj);
-					
 			return list;
 		}
 		catch (SQLException e) {
